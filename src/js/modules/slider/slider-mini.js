@@ -65,34 +65,37 @@ export default class MiniSlider extends Slider {
     }
 
     init() {
-        this.container.style.cssText = `
-        display: flex;
-        flex-wrap: wrap;
-        overflow: hidden;
-        align-items: flex-start;
-        `;
+        try {
+            this.container.style.cssText = `
+                display: flex;
+                flex-wrap: wrap;
+                overflow: hidden;
+                align-items: flex-start;
+            `;
 
-        this.bindTriggers();
-        this.decorizeSlides();
+            this.bindTriggers();
+            this.decorizeSlides();
 
-        if (this.autoplay) {
-            let autoPlaySlide = setInterval(() => this.nextSlider(), 5000);
+            if (this.autoplay) {
+                let autoPlaySlide = setInterval(() => this.nextSlider(), 5000);
 
-            [this.next, this.prev, ...this.slides].forEach(btn => {
-                btn.addEventListener("mouseover", (e) => {
-                    if (e.target){
-                        clearInterval(autoPlaySlide);
-                    }
-                    
+                [this.next, this.prev, ...this.slides].forEach((btn) => {
+                    btn.addEventListener("mouseover", (e) => {
+                        if (e.target) {
+                            clearInterval(autoPlaySlide);
+                        }
+                    });
+
+                    btn.addEventListener("mouseout", (e) => {
+                        if (e.target) {
+                            autoPlaySlide = setInterval(
+                                () => this.nextSlider(),
+                                5000
+                            );
+                        }
+                    });
                 });
-
-                btn.addEventListener("mouseout", (e) => {
-                    if (e.target){
-                        autoPlaySlide = setInterval(() => this.nextSlider(), 5000);
-                    } 
-                });
-            });
-
-        }
+            }
+        } catch (e) {}
     }
 }
