@@ -15,11 +15,10 @@ export default class MiniSlider extends Slider {
             }
         });
 
-        if(!this.slides[0].closest('button')){
+        if (!this.slides[0].closest("button")) {
             this.slides[0].classList.add(this.activeClass);
         }
 
-        
         if (this.animate) {
             this.slides[0].querySelector(".card__title").style.opacity = "1";
             this.slides[0].querySelector(
@@ -33,12 +32,12 @@ export default class MiniSlider extends Slider {
             this.slides[1].tagName == "BUTTON" &&
             this.slides[2].tagName == "BUTTON"
         ) {
-            this.container.appendChild(this.slides[0]); //slued
+            this.container.appendChild(this.slides[0]); //slide
             this.container.appendChild(this.slides[1]); //Btn
             this.container.appendChild(this.slides[2]); //Btn
             this.decorizeSlides();
         } else if (this.slides[1].tagName == "BUTTON") {
-            this.container.appendChild(this.slides[0]); //slued
+            this.container.appendChild(this.slides[0]); //slide
             this.container.appendChild(this.slides[1]); //Btn
             this.decorizeSlides();
         } else {
@@ -76,8 +75,24 @@ export default class MiniSlider extends Slider {
         this.bindTriggers();
         this.decorizeSlides();
 
-        if(this.autoplay) {
-            setInterval(() => this.nextSlider(),5000);
+        if (this.autoplay) {
+            let autoPlaySlide = setInterval(() => this.nextSlider(), 5000);
+
+            [this.next, this.prev, ...this.slides].forEach(btn => {
+                btn.addEventListener("mouseover", (e) => {
+                    if (e.target){
+                        clearInterval(autoPlaySlide);
+                    }
+                    
+                });
+
+                btn.addEventListener("mouseout", (e) => {
+                    if (e.target){
+                        autoPlaySlide = setInterval(() => this.nextSlider(), 5000);
+                    } 
+                });
+            });
+
         }
     }
 }
