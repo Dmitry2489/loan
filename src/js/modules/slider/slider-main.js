@@ -53,7 +53,7 @@ export default class MainSlider extends Slider {
                     (e) => {
                         console.log(e);
                         e.preventDefault();
-                        if (event.currentTarget.parentNode('.sidecontrol')) {
+                        if (event.currentTarget.closest('.sidecontrol')) {
                             if (this.slideIndex > 1) {
                                 this.slideIndex = 1;
                                 this.showSlides(this.slideIndex);
