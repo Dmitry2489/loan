@@ -1,4 +1,4 @@
-import Slider from "./slider";
+import Slider from "./Slider";
 
 export default class MainSlider extends Slider {
     constructor(btns) {
